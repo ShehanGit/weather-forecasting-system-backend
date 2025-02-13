@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BasicTest {
 
+    
     @Test
     void shouldPass() {
         assertTrue(true, "This test always passes!");
