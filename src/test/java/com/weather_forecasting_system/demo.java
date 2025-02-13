@@ -7,6 +7,6 @@ class BasicTest {
 
     @Test
     void shouldPass() {
-        assertTrue(true, "This test always passes!");
+        assertTrue(false, "This test always passes!");
     }
 }
