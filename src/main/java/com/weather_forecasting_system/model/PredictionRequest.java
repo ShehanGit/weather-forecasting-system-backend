@@ -2,6 +2,7 @@ package com.weather_forecasting_system.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
 public class PredictionRequest {
     @JsonProperty("N")
     private double n;
