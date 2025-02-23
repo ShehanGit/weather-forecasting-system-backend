@@ -104,21 +104,6 @@
 
 	<build>
 		<plugins>
-			<!-- Existing Spring Boot Maven Plugin -->
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-
-			<!-- Maven Shade Plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
@@ -132,8 +117,8 @@
 						<configuration>
 							<transformers>
 								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<!-- Replace with your actual main class -->
-									<mainClass>com.Agricultural-weather-forecasting-system.MainApplication</mainClass>
+									<!-- Replace with a valid package/class name (no dashes!). -->
+									<mainClass>com.agricultural.weatherforecasting.MainApplication</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>
@@ -141,7 +126,13 @@
 				</executions>
 			</plugin>
 
+			<!-- You can still keep spring-boot-maven-plugin as well -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
 		</plugins>
 	</build>
+
 
 </project>
