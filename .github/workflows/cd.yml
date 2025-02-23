@@ -1,0 +1,41 @@
+name: CD Deployment to AWS Lambda
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 21
+
+      - name: Build with Maven
+        run: mvn clean package
+
+      - name: Package artifact for Lambda
+        run: |
+          cd target
+          # Find the shaded JAR file (assuming only one *.jar file exists)
+          JAR_FILE=$(ls *.jar | head -n 1)
+          echo "Using JAR: $JAR_FILE"
+          zip function.zip "$JAR_FILE"
+          mv function.zip ../
+          cd ..
+        
+      - name: Deploy to AWS Lambda
+        run: |
+          aws lambda update-function-code --function-name ${{ secrets.LAMBDA_FUNCTION_NAME }} --zip-file fileb://function.zip
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
